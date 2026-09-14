@@ -5,6 +5,31 @@ import time
 # Set up the page layout
 st.set_page_config(page_title="TV Countdowns", layout="wide")
 
+# The CSS to inject the background image
+page_bg_img = """
+<style>
+/* Target the main app container */
+[data-testid="stAppViewContainer"] {
+    background-image: url("https://i.imgur.com/ZSOkTQU.jpeg"); /* Replace with your URL */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Make the top header transparent so it doesn't block the image */
+[data-testid="stHeader"] {
+    background: rgba(0,0,0,0);
+}
+
+/* Add a darker, semi-transparent background to the clock cards so text stays readable */
+.clock-card {
+    background-color: rgba(30, 30, 30, 0.85) !important;
+}
+</style>
+"""
+
+# Push the CSS to the page
+st.markdown(page_bg_img, unsafe_allow_html=True)
 # Define your 4 events here
 events = [
     {"name": "Test Flights CGH to UCH", "date": datetime(2026, 9, 24, 0, 0, 0)},
@@ -36,8 +61,8 @@ while True:
         
         # HTML/CSS to style each clock like a digital card
         card_style = """
-            <div style='background-color: #1e1e1e; padding: 30px; border-radius: 15px; 
-                        text-align: center; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);'>
+            <div class='clock-card' style='padding: 30px; border-radius: 15px; 
+                        text-align: center; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);'>
                 <h3 style='color: #4dabf7; font-size: 2rem; margin-top: 0;'>{name}</h3>
                 <h2 style='font-size: 3.5rem; margin-bottom: 0; font-family: monospace;'>{time}</h2>
             </div>
