@@ -8,7 +8,7 @@ st.set_page_config(page_title="TV Countdowns", layout="wide")
 # Define your 4 events here
 events = [
     {"name": "Test Flights CGH to UCH", "date": datetime(2026, 9, 24, 0, 0, 0)},
-    {"name": "Hive Rivvon Cutting", "date": datetime(2026, 10, 6, 0, 0, 0)},
+    {"name": "Hive Ribbon Cutting", "date": datetime(2026, 10, 6, 0, 0, 0)},
     {"name": "Part 135", "date": datetime(2027, 3, 1, 0, 0, 0)},
     {"name": "Path Lab Ops Ready", "date": datetime(2027, 4, 1, 0, 0, 0)}
 ]
