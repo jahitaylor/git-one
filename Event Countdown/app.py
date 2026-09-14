@@ -2,37 +2,58 @@ import streamlit as st
 from datetime import datetime
 import time
 
-# Set up the page to stretch across a TV screen
+# Set up the page layout
 st.set_page_config(page_title="TV Countdowns", layout="wide")
 
-# Use HTML inside Markdown just to make the text massive for the TV
-st.markdown("<h1 style='text-align: center; font-size: 4rem; color: #4dabf7;'>Resilient Lady Cruise</h1>", unsafe_allow_html=True)
+# Define your 4 events here
+events = [
+    {"name": "Test Flights CGH to UCH", "date": datetime(2026, 9, 24, 0, 0, 0)},
+    {"name": "Hive Rivvon Cutting", "date": datetime(2026, 10, 6, 0, 0, 0)},
+    {"name": "Part 135", "date": datetime(2027, 3, 1, 0, 0, 0)},
+    {"name": "Path Lab Ops Ready", "date": datetime(2027, 4, 1, 0, 0, 0)}
+]
 
-# Create an empty placeholder block on the page that we will overwrite every second
-clock_placeholder = st.empty()
+st.markdown("<h1 style='text-align: center; margin-bottom: 40px;'>Upcoming Events</h1>", unsafe_allow_html=True)
 
-# Set the target date
-target_date = datetime(2026, 12, 13, 0, 0, 0)
+# Create a 2x2 grid using Streamlit columns
+row1_col1, row1_col2 = st.columns(2)
+row2_col1, row2_col2 = st.columns(2)
+
+# Create a placeholder block for each grid quadrant
+placeholders = [
+    row1_col1.empty(), 
+    row1_col2.empty(), 
+    row2_col1.empty(), 
+    row2_col2.empty()
+]
 
 # The ticking loop
 while True:
     now = datetime.now()
-    distance = target_date - now
     
-    if distance.total_seconds() < 0:
-        clock_placeholder.markdown("<h2 style='text-align: center; font-size: 6rem;'>ARRIVED!</h2>", unsafe_allow_html=True)
-        break
+    for i, event in enumerate(events):
+        distance = event["date"] - now
         
-    # Calculate days, hours, minutes, seconds
-    days = distance.days
-    hours, remainder = divmod(distance.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    
-    # Format the string to always show two digits (e.g., 09s instead of 9s)
-    time_string = f"{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s"
-    
-    # Push the updated time to the placeholder block
-    clock_placeholder.markdown(f"<h2 style='text-align: center; font-size: 6rem;'>{time_string}</h2>", unsafe_allow_html=True)
-    
-    # Pause the script for 1 second, then loop again
+        # HTML/CSS to style each clock like a digital card
+        card_style = """
+            <div style='background-color: #1e1e1e; padding: 30px; border-radius: 15px; 
+                        text-align: center; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);'>
+                <h3 style='color: #4dabf7; font-size: 2rem; margin-top: 0;'>{name}</h3>
+                <h2 style='font-size: 3.5rem; margin-bottom: 0; font-family: monospace;'>{time}</h2>
+            </div>
+        """
+        
+        if distance.total_seconds() < 0:
+            html = card_style.format(name=event['name'], time="ARRIVED!")
+        else:
+            days = distance.days
+            hours, remainder = divmod(distance.seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            
+            time_string = f"{days}d : {hours:02d}h : {minutes:02d}m : {seconds:02d}s"
+            html = card_style.format(name=event['name'], time=time_string)
+            
+        # Overwrite the placeholder with the new time
+        placeholders[i].markdown(html, unsafe_allow_html=True)
+        
     time.sleep(1)
