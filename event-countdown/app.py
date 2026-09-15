@@ -32,7 +32,7 @@ page_bg_img = """
 st.markdown(page_bg_img, unsafe_allow_html=True)
 # Define your 4 events here
 events = [
-    {"name": "Test Flights CGH to UCH", "date": datetime(2026, 9, 24, 0, 0, 0)},
+    {"name": "Community to Downtown Validation Flight", "date": datetime(2026, 9, 24, 0, 0, 0)},
     {"name": "Hive Ribbon Cutting", "date": datetime(2026, 10, 6, 0, 0, 0)},
     {"name": "Part 135", "date": datetime(2027, 3, 1, 0, 0, 0)},
     {"name": "Path Lab Ops Ready", "date": datetime(2027, 4, 1, 0, 0, 0)}
